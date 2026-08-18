@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-DO List</title>
+    <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <style>
+        #container{
+            border: 1px solid red;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #card{
+            border: 1px solid black;
+            height: 60%;
+            width: 70%;
+            padding: 10px;
+        }
+        #taskContainer{
+            /* display: flex;
+            border-bottom: 1px solid black;
+            justify-content: space-between;
+            padding: 2px; */
+            /* text-decoration: line-through; */
+            
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="card">
+            <h3>Todo Tracker</h3>
+            <div class="input-group mb-3 mt-3">
+                <input id="title" type="text" class="form-control" placeholder="Add Task" aria-label="Recipient’s username" aria-describedby="button-addon2">
+                <button onclick="handleSubmit()" class="btn btn-primary" type="button" id="button-addon2">Submit</button>
+            </div>
+            <div id="taskContainer">
+                <!-- <p>Task</p>
+                <button type="button" class="btn btn-danger">Delete Task</button> -->
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    
+</body>
+</html>
+<script>
+
+    let todos=[]
+    let text = document.getElementById("title")
+    let handleSubmit=()=>{
+        let task={
+            title:text.value,
+            status:false
+        }
+        todos.push(task)
+        text.value = "";
+
+        render()
+    }
+    let taskContainer = document.getElementById("taskContainer")
+    let render = ()=>{
+        
+        taskContainer.innerHTML=""
+
+        todos.forEach((el, i) => {
+        taskContainer.innerHTML += `
+            <div style="display:flex; justify-content:space-between; align-items:center;border-bottom: 1px solid black;padding: 2px;">
+                <p onclick="toggleStatus(${i})" style="cursor:pointer; text-decoration: ${el.status == true?'line-through':"none"};color: ${el.status == true?'red':"none"};">${el.title}</p>
+                <button onclick="deletefunction(${i})" type="button" class="btn btn-danger">Delete Task</button>
+
+            </div>
+        `
+
+    });
+        
+    }
+    let deletefunction=(i)=>{
+        todos.splice(i,1)
+        render()
+    }
+
+    let toggleStatus=(index)=>{
+        // alert("clicked")
+        todos[index].status=!todos[index].status
+
+        render()
+    }
+
+
+</script>

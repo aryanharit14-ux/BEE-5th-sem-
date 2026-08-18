@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <style>
+        nav{
+            display:flex;
+            justify-content:center;
+            gap:30px;
+            padding:20px;
+            background:#333;
+        }
+
+        nav a{
+            color:white;
+            text-decoration:none;
+            font-size:20px;
+        }
+
+        #container{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:20px;
+            padding:20px;
+        }
+
+        .card{
+            border:1px solid gray;
+            padding:20px;
+            text-align:center;
+            border-radius:8px;
+        }
+
+        button{
+            padding:8px 15px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart</a>
+</nav>
+
+<div id="container"></div>
+
+<script src="index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Marks Grade Calculator</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container{
+            background: white;
+            padding: 30px;
+            width: 330px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        h2{
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label{
+            font-weight: bold;
+        }
+
+        input{
+            width: 90%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button{
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover{
+            background-color: #0056b3;
+        }
+
+        #result{
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Marks Grade Calculator</h2>
+
+    <label>Enter Marks:</label><br>
+
+    <input type="number" id="marks" placeholder="Enter marks">
+
+    <button onclick="checkGrade()">Check Grade</button>
+
+    <p id="result"></p>
+
+</div>
+
+<script>
+function checkGrade(){
+
+    let marks = Number(document.getElementById("marks").value);
+    let result = document.getElementById("result");
+
+    if(marks < 0 || marks > 100){
+        result.innerHTML = "Invalid Marks";
+        result.style.color = "black";
+    }
+    else if(marks >= 90){
+        result.innerHTML = "Grade A+";
+        result.style.color = "green";
+    }
+    else if(marks >= 75){
+        result.innerHTML = "Grade A";
+        result.style.color = "blue";
+    }
+    else if(marks >= 60){
+        result.innerHTML = "Grade B";
+        result.style.color = "orange";
+    }
+    else if(marks >= 40){
+        result.innerHTML = "Grade C";
+        result.style.color = "purple";
+    }
+    else{
+        result.innerHTML = "Fail";
+        result.style.color = "red";
+    }
+
+}
+</script>
+
+</body>
+</html>

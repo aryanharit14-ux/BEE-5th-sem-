@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+    <style>
+        #container{
+            width: 400px;
+            border: 2px solid red;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        }
+        img{
+            height: 300px;
+            width: 250px;
+        }
+        .btn{
+            display: flex;
+            gap: 20px;
+        }
+        button{
+            font-size: xx-large;
+            width: 100px;
+        }
+        button:hover{
+            background-color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img src="https://c.saavncdn.com/artists/Shah_Rukh_Khan_500x500.jpg" alt="Shah Rukh Khan">
+        <h3>King Khan</h3>
+        <div class="btn">
+            <button id="likeBtn"> 👍</button>
+            <h3>Likes:<span id="likeCount">0</span></h3>
+        </div>
+        <div class="btn">        
+            <button id="dislikeBtn">👎</button>
+            <h3>Dislikes:<span id="dislikeCount">0</span></h3>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    var lbtn=document.getElementById("likeBtn");
+    // console.log(lbtn)
+    lbtn.addEventListener("click",function(){
+        var count=0
+        count+=1
+        var likes=document.getElementById("likeCount");
+        likes.innerText=count
+        likes.style.color="green";
+    });
+    var dbtn=document.getElementById("dislikeBtn");
+    // console.log(dbtn)
+    dbtn.addEventListener("click",function(){
+        var count=0
+        count+=1
+        var dislikes=document.getElementById("dislikeCount");
+        dislikes.innerText=count;
+    });
+    
+</script>

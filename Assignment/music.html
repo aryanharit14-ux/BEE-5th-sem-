@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music Queue</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body{
+    background:#f4f4f4;
+}
+#container{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+#card{
+    width:650px;
+    background:white;
+    border:1px solid #ccc;
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+#nowPlaying{
+    border:1px solid #ccc;
+    border-radius:5px;
+    background:#f8f9fa;
+    padding:12px;
+    margin:15px 0;
+    font-weight:bold;
+    min-height:45px;
+}
+#queue div{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid #ddd;
+    padding:10px;
+}
+</style>
+</head>
+<body>
+<div id="container">
+    <div id="card">
+        <h2 class="text-center mb-4">🎵 Music Queue</h2>
+        <h5>Now Playing</h5>
+        <div id="nowPlaying"> None</div>
+        <div class="input-group mb-3"><input id="song" type="text"class="form-control"placeholder="Enter Song Name">
+            <button class="btn btn-primary"onclick="addSong()">Save</button>
+            <button class="btn btn-success" onclick="playSongs()">Play Song</button>
+        </div>
+        <h5>Song Queue</h5>
+        <div id="queue"></div>
+    </div>
+</div>
+<script>
+let songs = [];
+let isPlaying = false;
+const duration = 2000; 
+let input = document.getElementById("song");
+let queue = document.getElementById("queue");
+let nowPlaying = document.getElementById("nowPlaying");
+function addSong(){
+    if(input.value.trim()==""){
+        alert("Please Enter Song Name");
+        return;
+    }
+    songs.push(input.value.trim());
+    input.value="";
+    render();
+}
+function render(){
+    queue.innerHTML="";
+    if(songs.length==0){
+        queue.innerHTML="<p class='text-center mt-2'>Queue Empty</p>";
+        return;
+    }
+    songs.forEach(function(song,index){
+        queue.innerHTML += `
+        <div>
+            <span>${index+1}. ${song}</span>
+        </div>
+        `;
+    });
+}
+function playSongs(){
+    if(songs.length==0){
+        alert("Queue is Empty");
+        return;
+    }
+    if(isPlaying){
+        return;
+    }
+    isPlaying=true;
+    playNextSong();
+}
+function playNextSong(){
+    if(songs.length==0){
+        nowPlaying.innerHTML="None";
+        isPlaying=false;
+        render();
+        return;
+    }
+    let currentSong = songs.shift();
+    nowPlaying.innerHTML=currentSong;
+    render();
+    setTimeout(function(){
+        playNextSong();
+    },duration);
+}
+render();
+</script>
+</body>
+</html>

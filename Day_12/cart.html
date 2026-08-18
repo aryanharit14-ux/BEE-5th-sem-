@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Cart Page</h1>
+    <div id="showCart"></div>
+</body>
+</html>
+<script>
+    // get items from local storage and show it on UI
+    let cartProducts = JSON.parse(localStorage.getItem("cart")) || []
+    let showCart = document.getElementById("showCart")
+    cartProducts.forEach(element => {
+        showCart.innerHTML += `
+            <div>
+                <h3>${element.id}</h3>
+                <h3>${element.title}</h3>
+                <img height="100px" src = "${element.images[0]}">
+            </div>
+        `
+    });
+</script>

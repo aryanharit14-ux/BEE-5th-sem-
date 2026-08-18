@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save & Load Notes</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            background:#f4f4f4;
+        }
+
+        .container{
+            width:400px;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.2);
+            text-align:center;
+        }
+
+        textarea{
+            width:100%;
+            height:150px;
+            padding:10px;
+            resize:none;
+            margin-bottom:15px;
+        }
+
+        button{
+            padding:10px 15px;
+            margin:5px;
+            cursor:pointer;
+        }
+
+        #message{
+            margin-top:10px;
+            font-weight:bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>User Notes</h2>
+
+    <textarea id="notes" placeholder="Enter your notes here..."></textarea>
+
+    <br>
+
+    <button id="saveBtn">Save Notes</button>
+    <button id="loadBtn">Load Notes</button>
+    <button id="clearBtn">Clear Notes</button>
+
+    <p id="message"></p>
+
+</div>
+
+<script>
+
+const textarea = document.getElementById("notes");
+const message = document.getElementById("message");
+
+window.onload = function () {
+    const saved = localStorage.getItem("notes");
+
+    if(saved){
+        textarea.value = saved;
+    }
+};
+
+document.getElementById("saveBtn").addEventListener("click", function(){
+
+    const notes = textarea.value.trim();
+
+    if(notes === ""){
+        message.style.color = "red";
+        message.innerText = "Cannot save empty notes!";
+        return;
+    }
+
+    localStorage.setItem("notes", notes);
+
+    message.style.color = "green";
+    message.innerText = "Notes Saved Successfully!";
+});
+
+document.getElementById("loadBtn").addEventListener("click", function(){
+
+    const saved = localStorage.getItem("notes");
+
+    if(saved){
+        textarea.value = saved;
+        message.style.color = "green";
+        message.innerText = "Notes Loaded!";
+    }else{
+        message.style.color = "red";
+        message.innerText = "No Notes Found!";
+    }
+});
+
+document.getElementById("clearBtn").addEventListener("click", function(){
+
+    localStorage.removeItem("notes");
+    textarea.value = "";
+
+    message.style.color = "blue";
+    message.innerText = "Notes Cleared!";
+});
+
+</script>
+
+</body>
+</html>

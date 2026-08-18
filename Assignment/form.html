@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+</head>
+<body>
+    <div>
+        <form action="">
+            <div>
+                <label for="">Name:</label>
+                <input type="text" id="name" >
+            </div>
+            <div>
+                <label for="">Email:</label>
+                <input type="email" id="email">
+            </div>
+            <div>
+                <label for="">Age:</label>
+                <input type="text" id="age">
+            </div>
+            <div>
+                <button type="button" id="submit">Submit</button>
+            </div>
+        </form>
+        <div>
+            <h3>Students Data</h3>
+            <table border="2">
+                <thead>
+                    <tr>
+                        <th>Name:</th>
+                        <th>Email:</th>
+                        <th>Age:</th>
+                    </tr>
+                </thead>
+                <tbody id="dinamicData" >
+                    
+                </tbody>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    var btn=document.getElementById("submit");
+    // <btn>Submit</btn> 
+    btn.addEventListener("click",function(){
+        event.preventDefault()
+
+        var name=document.getElementById("name")
+        console.log(name.value)
+        var email=document.getElementById("email")
+        var age=document.getElementById("age")
+
+        var valName=name.value
+        var valEmail=email.value
+        var valAge=age.value
+
+        var tbody=document.getElementById("dinamicData")
+        tbody.innerHTML+=
+        `<tr>
+                <td>${valName}</td>
+                <td>${valEmail}</td>
+                <td>${valAge}</td>
+            </tr>`
+
+            name.value=""
+            email.value=""
+            age.value=""
+
+            var showDiv=document.getElementById("d")
+            showDiv.style.display="block"
+    })
+</script>

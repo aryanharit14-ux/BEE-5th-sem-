@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background-color: #f4f4f4;
+        }
+
+        #container{
+            width: 90%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        h1{
+            margin-bottom: 20px;
+            color: green;
+        }
+
+        input{
+            width: 250px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        button{
+            padding: 8px 15px;
+            background-color: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover{
+            background-color: darkgreen;
+        }
+
+       #cardContainer{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .card{
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: rgba(0,0,0,0.24) 0px 3px 8px;
+            padding-bottom: 15px;
+        }
+        .card img{
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card h3{
+            margin: 10px 0;
+        }
+
+        .card p{
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+
+        <h1>Recipe Finder</h1>
+
+        <div>
+            <input type="text" id="find" placeholder="Search recipe...">
+            <button id="searchBtn">Search</button>
+        </div>
+
+        <div id="cardContainer"></div>
+
+    </div>
+
+<script>
+
+let container = document.getElementById("cardContainer");
+let input = document.getElementById("find");
+let button = document.getElementById("searchBtn");
+
+// Display Recipes
+function displayRecipes(recipes){
+
+    container.innerHTML = "";
+
+    if(recipes.length === 0){
+        container.innerHTML = "<h2>No Recipe Found</h2>";
+        return;
+    }
+
+    recipes.forEach(recipe => {
+
+        container.innerHTML += `
+            <div class="card">
+                <img src="${recipe.image}" alt="${recipe.name}">
+                <h3>${recipe.name}</h3>
+                <p><strong>Cook Time:</strong> ${recipe.cookTimeMinutes} mins</p>
+                <p><strong>Rating:</strong> ⭐ ${recipe.rating}</p>
+            </div>
+        `;
+    });
+}
+
+// Fetch All Recipes
+async function fetchRecipes(){
+
+    try{
+
+        let response = await fetch("https://dummyjson.com/recipes?q=$(value)");
+        let data = await response.json();
+
+        displayRecipes(data.recipes);
+
+    }
+    catch(error){
+        console.log(error);
+    }
+
+}
+
+// Search Recipes
+async function searchRecipe(){
+
+    let value = input.value.trim();
+
+    if(value === ""){
+        fetchRecipes();
+        return;
+    }
+
+    try{
+
+        let response = await fetch(`https://dummyjson.com/recipes/search?q=${value}`);
+        let data = await response.json();
+
+        displayRecipes(data.recipes);
+        input.value="";
+
+    }
+    catch(error){
+        console.log(error);
+    }
+
+}
+
+button.addEventListener("click", searchRecipe);
+
+input.addEventListener("keypress", function(event){
+    if(event.key === "Enter"){
+        searchRecipe();
+    }
+});
+
+// Load all recipes initially
+fetchRecipes();
+
+</script>
+
+</body>
+</html>

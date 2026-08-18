@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 2-Question 3</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+
+        body{
+            background:#f4f4f4;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            transition:0.4s;
+        }
+
+        .container{
+            width:400px;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.2);
+            text-align:center;
+        }
+
+        h2{
+            margin-bottom:20px;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+            border:1px solid #ccc;
+            border-radius:5px;
+            font-size:16px;
+        }
+
+        button{
+            padding:10px 20px;
+            margin:10px 5px;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:16px;
+            color:white;
+        }
+
+        #saveBtn{
+            background:#007bff;
+        }
+
+        #resetBtn{
+            background:#dc3545;
+        }
+
+        #message{
+            margin-top:20px;
+            font-size:20px;
+            font-weight:bold;
+            color:#222;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>User Preferences</h2>
+
+    <input type="text" id="name" placeholder="Enter your name">
+
+    <input type="text" id="color" placeholder="Enter background color(red or #00ff00)">
+
+    <button id="saveBtn">Save Preferences</button>
+
+    <button id="resetBtn">Reset</button>
+
+    <div id="message"></div>
+
+</div>
+
+<script>
+
+    const nameInput=document.getElementById("name");
+    const colorInput=document.getElementById("color");
+    const message=document.getElementById("message");
+
+    document.getElementById("saveBtn").addEventListener("click",function(){
+
+        let name=nameInput.value.trim();
+        let color=colorInput.value.trim();
+
+        if(name===""){
+            alert("Please enter your name!");
+            return;
+        }
+
+        if(color===""){
+            alert("Please enter a background color!");
+            return;
+        }
+
+        localStorage.setItem("userName",name);
+        localStorage.setItem("bgColor",color);
+
+        message.innerHTML="Welcome"+name+"!";
+        document.body.style.backgroundColor=color;
+
+    });
+
+    window.onload=function(){
+
+        let savedName=localStorage.getItem("userName");
+        let savedColor=localStorage.getItem("bgColor");
+
+        if(savedName && savedColor){
+
+            nameInput.value=savedName;
+            colorInput.value=savedColor;
+
+            message.innerHTML="Welcome,"+savedName+"!";
+            document.body.style.backgroundColor=savedColor;
+        }
+
+    };
+
+    document.getElementById("resetBtn").addEventListener("click",function(){
+
+        localStorage.removeItem("userName");
+        localStorage.removeItem("bgColor");
+
+        nameInput.value="";
+        colorInput.value="";
+
+        message.innerHTML="";
+
+        document.body.style.backgroundColor="#f4f4f4";
+
+    });
+
+</script>
+
+</body>
+</html>

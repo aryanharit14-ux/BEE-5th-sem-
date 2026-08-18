@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Checker</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f4f4;
+        }
+
+        .container {
+            background: whitesmoke;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            text-align: center;
+            justify-content: center;
+            width: 320px;
+            height: 300px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        p {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Age Checker</h2>
+
+        <input type="number" id="age" placeholder="Enter your age">
+
+        <button onclick="checkAge()">Check Eligibility</button>
+
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function checkAge() {
+            let age = Number(document.getElementById("age").value);
+            let result = document.getElementById("result");
+
+            if (age >= 18) {
+                result.innerHTML = "You can Vote";
+                result.style.color = "green";
+            } else {
+                result.innerHTML = "You are not eligible to vote";
+                result.style.color = "red";
+            }
+        }
+    </script>
+
+</body>
+</html>

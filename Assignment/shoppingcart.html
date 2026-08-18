@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f5f5f5;
+}
+
+.header{
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:20px;
+    padding:20px;
+}
+
+#counter{
+    background:green;
+    color:white;
+    padding:10px 20px;
+    border-radius:5px;
+}
+
+#viewCart{
+    background:blue;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+#cartBox{
+    width:420px;
+    margin:20px auto;
+    background:white;
+    border:2px solid black;
+    border-radius:10px;
+    padding:20px;
+    display:none;
+}
+
+#cartItems div{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+    border-bottom:1px solid lightgray;
+    padding-bottom:5px;
+}
+
+#cont1{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+    padding:20px;
+}
+
+.product{
+    width:220px;
+    background:white;
+    border-radius:10px;
+    padding:10px;
+    text-align:center;
+    box-shadow:0 0 8px rgba(0,0,0,0.2);
+}
+
+.product img{
+    width:100%;
+    height:180px;
+    object-fit:contain;
+}
+
+.product h3{
+    margin:10px 0;
+}
+
+.product h4{
+    color:green;
+    margin-bottom:10px;
+}
+
+button{
+    width:140px;
+    padding:8px;
+    border:none;
+    border-radius:5px;
+    color:white;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+.cart-btn{
+    background:green;
+}
+
+.cart-btn:hover{
+    background:darkgreen;
+}
+
+.delete-btn{
+    background:red;
+}
+
+.delete-btn:hover{
+    background:darkred;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h2 id="counter">
+        Cart : 0
+    </h2>
+
+    <button id="viewCart">
+        View Cart
+    </button>
+
+</div>
+
+<div id="cartBox">
+
+    <h2>Shopping Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <hr>
+
+    <h3 id="totalPrice">
+        Total : $0
+    </h3>
+
+</div>
+
+<div id="cont1"></div>
+
+<script>
+
+let container=document.getElementById("cont1");
+
+let cart=[];
+
+let count=0;
+
+fetch("https://dummyjson.com/products")
+
+.then(function(res){
+
+    return res.json();
+
+})
+
+.then(function(data){
+
+    for(let el of data.products){
+
+        container.innerHTML+=`
+
+        <div class="product" id="product-${el.id}">
+
+            <img src="${el.images[0]}">
+
+            <h3>${el.title}</h3>
+
+            <h4>$${el.price}</h4>
+
+            <button
+            class="cart-btn"
+            data-id="${el.id}">
+            Add to Cart
+            </button>
+
+            <br>
+
+            <button
+            class="delete-btn"
+            onclick="handleDelete(${el.id})">
+            Delete Product
+            </button>
+
+        </div>
+
+        `;
+
+    }
+
+    let buttons=document.querySelectorAll(".cart-btn");
+
+    buttons.forEach(function(btn){
+
+        btn.addEventListener("click",function(){
+
+            let id=btn.dataset.id;
+
+            let product=data.products.find(function(item){
+
+                return item.id==id;
+
+            });
+
+            let already=cart.find(function(item){
+
+                return item.id==id;
+
+            });
+
+            if(already){
+
+                alert("Product already added.");
+
+                return;
+
+            }
+
+            cart.push(product);
+
+            count++;
+
+            document.getElementById("counter").innerText="Cart : "+count;
+
+            btn.innerText="Added ✓";
+
+            btn.disabled=true;
+
+            displayCart();
+
+        });
+
+    });
+
+})
+
+.catch(function(err){
+
+    console.log(err);
+
+});
+
+function handleDelete(id){
+
+    let div=document.getElementById(`product-${id}`);
+
+    div.remove();
+
+}
+
+function displayCart(){
+
+    let cartItems=document.getElementById("cartItems");
+
+    let total=0;
+
+    cartItems.innerHTML="";
+
+    cart.forEach(function(product){
+
+        total+=product.price;
+
+        cartItems.innerHTML+=`
+
+        <div>
+
+            <span>${product.title}</span>
+
+            <span>$${product.price}</span>
+
+        </div>
+
+        `;
+
+    });
+
+    document.getElementById("totalPrice").innerText="Total : $"+total;
+
+}
+
+let view=document.getElementById("viewCart");
+
+view.addEventListener("click",function(){
+
+    let cartBox=document.getElementById("cartBox");
+
+    if(cartBox.style.display=="none" || cartBox.style.display==""){
+
+        cartBox.style.display="block";
+
+        view.innerText="Hide Cart";
+
+    }
+
+    else{
+
+        cartBox.style.display="none";
+
+        view.innerText="View Cart";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
