@@ -1,1 +1,24 @@
-{"users":[{"id":1,"name":"Dhruv","email":"dhruv@example.com"},{"id":2,"name":"Prateek","email":"prateek@gmail.com"}]}
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Aryan0",
+            "email": "aryan01@gmail.com"
+        },
+        {
+            "id": 2,
+            "name": "Aryan1",
+            "email": "aryan12@gmail.com"
+        },
+        {
+            "id": 3,
+            "name": "Aryan2",
+            "email": "aryan23@gmail.com"
+        },
+        {
+            "id": 4,
+            "name": "Aryan3",
+            "email": "aryan34@gmail.com"
+        }
+    ]
+}
